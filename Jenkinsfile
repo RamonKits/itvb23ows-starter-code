@@ -1,9 +1,19 @@
 pipeline {
-    agent { docker { image 'php:apache' } }
+    agent any
     stages {
         stage('build') {
             steps {
-                sh 'php --version'
+                echo 'Building..'
+            }
+        }
+        stage('test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('deploy') {
+            steps {
+                echo 'Deploying....'
             }
         }
     }
