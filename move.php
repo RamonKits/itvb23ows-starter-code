@@ -64,7 +64,7 @@ if (!isset($board[$from])) {
             $board[$to] = [$tile];
         }
         $_SESSION['player'] = 1 - $_SESSION['player'];        
-        $db = include_once 'Database.php';
+        $db = include_once 'database.php';
         $stmt = $db->prepare(
             'INSERT INTO moves
                 (game_id, type, move_from, move_to, previous_id, state)
