@@ -135,14 +135,14 @@
         <form method="post" action="play.php">
             <select name="piece">
                 <?php
-                    foreach ($hand[$player] as $tile => $ct) {
+                    foreach (getAvailablePieces($hand[$player]) as $tile) {
                         echo "<option value=\"$tile\">$tile</option>";
                     }
                 ?>
             </select>
             <select name="to">
                 <?php
-                    foreach ($to as $pos) {
+                    foreach (getValidPlacements($player, $hand[$player], $board) as $pos) {
                         echo "<option value=\"$pos\">$pos</option>";
                     }
                 ?>
@@ -152,7 +152,7 @@
         <form method="post" action="move.php">
             <select name="from">
                 <?php
-                    foreach (array_keys($board) as $pos) {
+                    foreach (getOwnTiles($player, $board) as $pos) {
                         echo "<option value=\"$pos\">$pos</option>";
                     }
                 ?>

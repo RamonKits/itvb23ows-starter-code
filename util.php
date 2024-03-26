@@ -59,3 +59,47 @@ function slide($board, $from, $to) {
     }
     return min(len($board[$common[0]]), len($board[$common[1]])) <= max(len($board[$from]), len($board[$to]));
 }
+
+function getAvailablePieces($hand) {
+    $available = [];
+    foreach ($hand as $piece => $count) {
+        if ($count) {
+            $available[] = $piece;
+        }
+    }
+    return $available;
+}
+
+function getValidPlacements($player, $hand, $board) {
+    $validPlacements = [];
+    // if boeard is empty, return center position
+    if (!$board) {
+        return ['0,0'];
+    }
+    foreach ($board as $pos => $tile) {
+        // for surrounding empty positions
+        $neighbours = [];
+        foreach ($GLOBALS['OFFSETS'] as $pq) {
+            $p = explode(',', $pos)[0] + $pq[0];
+            $q = explode(',', $pos)[1] + $pq[1];
+            if (array_sum($hand) < 11 && !neighboursAreSameColor($player, "$p,$q", $board)) {
+                continue;
+            }
+            if (!isset($board["$p,$q"])) {
+                $neighbours[] = "$p,$q";
+            }
+        }
+        $validPlacements = array_merge($validPlacements, $neighbours);
+    }
+    return $validPlacements;
+}
+
+function getOwnTiles($player, $board) {
+    $ownTiles = [];
+    foreach ($board as $pos => $tile) {
+        if ($tile && $tile[count($tile) - 1][0] == $player) {
+            $ownTiles[] = $pos;
+        }
+    }
+    return $ownTiles;
+}

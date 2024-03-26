@@ -1,2 +1,5 @@
 # ignore vendor directory
 vendor/
+
+# ignore phpunit cache
+.phpunit.result.cache
