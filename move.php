@@ -42,7 +42,7 @@ if (!isset($board[$from])) {
         } else {
             if ($from == $to) {
                 $_SESSION['error'] = 'Tile must move';
-            } elseif (isset($board[$to]) && $tile[1] != "B") {
+            } elseif (isset($board[$to]) && len($board[$to]) > 0 && $tile[1] != "B") {
                 $_SESSION['error'] = 'Tile not empty';
             } elseif ($tile[1] == "Q" || $tile[1] == "B") {
                 if (!slide($board, $from, $to)) {
@@ -70,7 +70,8 @@ if (!isset($board[$from])) {
                 (game_id, type, move_from, move_to, previous_id, state)
                 VALUES (?, "move", ?, ?, ?, ?)'
         );
-        $stmt->bind_param('issis', $_SESSION['game_id'], $from, $to, $_SESSION['last_move'], getState());
+        $state = getState();
+        $stmt->bind_param('issis', $_SESSION['game_id'], $from, $to, $_SESSION['last_move'], $state);
         $stmt->execute();
         $_SESSION['last_move'] = $db->insert_id;
     }

@@ -113,4 +113,14 @@ class UtilTest extends TestCase
         $this->assertEquals(getOwnTiles('0', $board), ['0,0', '1,0']);
         $this->assertEquals(getOwnTiles('1', $board), ['0,1', '1,1']);
     }
+
+    public function testSlide()
+    {
+        $board = [
+            '0,0' => [['0', 'Q']],
+            '1,0' => [['1', 'Q']],
+        ];
+        // Queen should be able to slide to (0, 1)
+        $this->assertTrue(slide($board, '0,0', '0,1'));
+    }
 }
