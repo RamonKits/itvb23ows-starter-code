@@ -11,6 +11,10 @@
     $player = $_SESSION['player'];
     $hand = $_SESSION['hand'];
 
+    if (len($board) == 0) {
+        $_SESSION['last_move'] = 0;
+    }
+
     $to = [];
     foreach ($GLOBALS['OFFSETS'] as $pq) {
         foreach (array_keys($board) as $pos) {
