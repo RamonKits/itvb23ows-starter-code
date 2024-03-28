@@ -123,4 +123,56 @@ class UtilTest extends TestCase
         // Queen should be able to slide to (0, 1)
         $this->assertTrue(slide($board, '0,0', '0,1'));
     }
+
+    public function testMoveGrasshopper()
+    {
+        // moves by jumping in a straight line to a field immediately behind another tile in the direction of the jump
+        $board = [
+            '0,0' => [['0', 'G']],
+            '0,1' => [['1', 'Q']],
+        ];
+        $this->assertTrue(moveGrasshopper($board, '0,0', '0,2'));
+        $this->assertFalse(moveGrasshopper($board, '0,0', '0,3'));
+        $this->assertFalse(moveGrasshopper($board, '0,0', '1,1'));
+
+        $board = [
+            '0,0' => [['0', 'G']],
+            '0,1' => [['1', 'Q']],
+            '0,2' => [['0', 'Q']],
+        ];
+        $this->assertTrue(moveGrasshopper($board, '0,0', '0,3'));
+        $this->assertFalse(moveGrasshopper($board, '0,0', '0,4'));
+        $this->assertFalse(moveGrasshopper($board, '0,0', '1,2'));
+
+        // may not move to the field where it is already standing
+        $board = [
+            '0,0' => [['0', 'G']],
+            '0,1' => [['1', 'Q']],
+        ];
+        $this->assertFalse(moveGrasshopper($board, '0,0', '0,0'));
+
+        // must jump over at least one tile
+        $board = [
+            '0,0' => [['0', 'G']],
+            '0,1' => [['1', 'Q']],
+            '0,2' => [['0', 'Q']],
+        ];
+        $this->assertFalse(moveGrasshopper($board, '0,0', '1,0'));
+
+        // may not jump to an occupied field
+        $board = [
+            '0,0' => [['0', 'G']],
+            '0,1' => [['1', 'Q']],
+            '0,2' => [['0', 'Q']],
+        ];
+        $this->assertFalse(moveGrasshopper($board, '0,0', '0,2'));
+
+        // may not jump over empty fields
+        $board = [
+            '0,0' => [['0', 'G']],
+            '0,1' => [['1', 'Q']],
+            '1,1' => [['0', 'Q']],
+        ];
+        $this->assertFalse(moveGrasshopper($board, '0,0', '1,2'));
+    }
 }
