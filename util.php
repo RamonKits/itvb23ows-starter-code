@@ -59,6 +59,18 @@ function slide($board, $from, $to) {
     return min(len($board[$common[0]] ?? []), len($board[$common[1]] ?? [])) <= max(len($board[$from] ?? []), len($board[$to] ?? []));
 }
 
+function moveGrasshopper($board, $from, $to) {
+    // TODO: implement
+}
+
+function moveAnt($board, $from, $to) {
+    // TODO: implement
+}
+
+function moveSpider($board, $from, $to) {
+    // TODO: implement
+}
+
 function getAvailablePieces($hand) {
     $available = [];
     foreach ($hand as $piece => $count) {

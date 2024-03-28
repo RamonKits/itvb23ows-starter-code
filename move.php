@@ -48,6 +48,18 @@ if (!isset($board[$from])) {
                 if (!slide($board, $from, $to)) {
                     $_SESSION['error'] = 'Tile must slide';
                 }
+            } elseif (!$tile[1] == "G") {
+                if (!moveGrasshopper($board, $from, $to)) {
+                    $_SESSION['error'] = 'Grasshopper cannot move to this position';
+                }
+            } elseif (!$tile[1] == "A") {
+                if (!moveAnt($board, $from, $to)) {
+                    $_SESSION['error'] = 'Ant cannot move to this position';
+                }
+            } elseif (!$tile[1] == "S") {
+                if (!moveSpider($board, $from, $to)) {
+                    $_SESSION['error'] = 'Spider cannot move to this position';
+                }
             }
         }
     }
