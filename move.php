@@ -69,6 +69,8 @@ if (!isset($board[$from])) {
         } else {
             $board[$from] = [$tile];
         }
+        header('Location: index.php');
+        exit();
     } else {
         if (isset($board[$to])) {
             array_push($board[$to], $tile);
@@ -102,7 +104,9 @@ if (!isset($board[$from])) {
                 $_SESSION['error'] = 'Draw';
                 break;
         }
+        header('Location: index.php');
+        exit();
     }
 }
 
-header('Location: index.php');
+header('Location: aimove.php');

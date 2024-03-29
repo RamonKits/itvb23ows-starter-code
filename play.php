@@ -35,6 +35,8 @@ if (!$hand[$piece]) {
     $stmt->bind_param('issis', $_SESSION['game_id'], $piece, $to, $_SESSION['last_move'], $state);
     $stmt->execute();
     $_SESSION['last_move'] = $db->insert_id;
+    header('Location: aimove.php');
+    exit();
 }
 
 header('Location: index.php');

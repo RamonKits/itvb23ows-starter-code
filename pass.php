@@ -16,4 +16,4 @@ $stmt->execute();
 $_SESSION['last_move'] = $db->insert_id;
 $_SESSION['player'] = 1 - $_SESSION['player'];
 
-header('Location: index.php');
+header('Location: aimove.php');
