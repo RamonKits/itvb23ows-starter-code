@@ -340,7 +340,7 @@ class UtilTest extends TestCase
             '1,-1' => [[1, 'B']],
             '-1,1' => [[1, 'B']],
         ];
-        $this->assertEquals(endOfGame($board), 1);
+        $this->assertEquals(endOfGame($board), 2);
 
         $board = [
             '0,0' => [[1, 'Q']],
@@ -351,7 +351,7 @@ class UtilTest extends TestCase
             '1,-1' => [[0, 'B']],
             '-1,1' => [[0, 'B']],
         ];
-        $this->assertEquals(endOfGame($board), 0);
+        $this->assertEquals(endOfGame($board), 1);
 
         $board = [
             '0,0' => [[0, 'Q']],
@@ -366,7 +366,7 @@ class UtilTest extends TestCase
             '0,2' => [[1, 'B']],
             '-2,2' => [[1, 'B']],
         ];
-        $this->assertEquals(endOfGame($board), 2);
+        $this->assertEquals(endOfGame($board), 3);
 
         $board = [
             '0,0' => [['0', 'A']],
@@ -374,7 +374,7 @@ class UtilTest extends TestCase
             '0,2' => [['0', 'Q']],
             '1,1' => [['1', 'G']],
         ];
-        $this->assertEquals(endOfGame($board), -1);
+        $this->assertEquals(endOfGame($board), 0);
 
     }
 }
