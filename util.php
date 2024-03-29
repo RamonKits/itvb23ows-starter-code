@@ -82,7 +82,35 @@ function moveGrasshopper($board, $from, $to) {
 }
 
 function moveAnt($board, $from, $to) {
-    // TODO: implement
+    $from = explode(',', $from);
+    $to = explode(',', $to);
+    // cannot move to an occupied field
+    if (isset($board["$to[0],$to[1]"])) {
+        return false;
+    }
+    $visited = [];
+    $queue = [$from];
+    // use BFS to find path, if path cannot be found, return false
+    return antBfs($board, $from, $to, $visited, $queue);
+}
+
+function antBfs($board, $from, $to, $visited, $queue) {
+    // can move using slide function
+    if (slide($board, "$from[0],$from[1]", "$to[0],$to[1]")) {
+        return true;
+    }
+    $visited[] = $from;
+    foreach ($GLOBALS['OFFSETS'] as $pq) {
+        $p = $from[0] + $pq[0];
+        $q = $from[1] + $pq[1];
+        if (isset($board["$p,$q"]) && !in_array([$p, $q], $visited)) {
+            $queue[] = [$p, $q];
+        }
+    }
+    if ($queue) {
+        return antBfs($board, array_shift($queue), $to, $visited, $queue);
+    }
+    return false;
 }
 
 function moveSpider($board, $from, $to) {
