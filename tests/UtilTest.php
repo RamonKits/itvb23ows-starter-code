@@ -203,4 +203,5 @@ class UtilTest extends TestCase
         ];
         $this->assertFalse(moveAnt($board, '0,0', '0,2'));
         $this->assertFalse(moveAnt($board, '0,0', '1,1'));
+    }
 }
