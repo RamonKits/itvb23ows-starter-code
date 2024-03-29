@@ -204,4 +204,37 @@ class UtilTest extends TestCase
         $this->assertFalse(moveAnt($board, '0,0', '0,2'));
         $this->assertFalse(moveAnt($board, '0,0', '1,1'));
     }
+
+    public function testMoveSpider()
+    {
+        // moves by shifting exactly three times
+        $board = [
+            '0,0' => [['0', 'S']],
+            '0,1' => [['1', 'Q']],
+            '0,2' => [['0', 'B']],
+            '0,3' => [['1', 'B']],
+            '0,4' => [['0', 'B']],
+        ];
+        $this->assertFalse(moveSpider($board, '0,0', '1,3'));
+        $this->assertTrue(moveSpider($board, '0,0', '1,2'));
+        $this->assertFalse(moveSpider($board, '0,0', '-1,4'));
+        $this->assertTrue(moveSpider($board, '0,0', '-1,3'));
+
+        // may not move to the field where he is already standing
+        $board = [
+            '0,0' => [['0', 'S']],
+            '0,1' => [['1', 'Q']],
+        ];
+        $this->assertFalse(moveSpider($board, '0,0', '0,0'));
+
+        // may only be moved over and into empty fields
+        $board = [
+            '0,0' => [['0', 'S']],
+            '0,1' => [['1', 'Q']],
+            '0,2' => [['0', 'Q']],
+            '1,1' => [['1', 'G']],
+        ];
+        $this->assertFalse(moveSpider($board, '0,0', '0,2'));
+        $this->assertFalse(moveSpider($board, '0,0', '1,1'));
+    }   
 }
