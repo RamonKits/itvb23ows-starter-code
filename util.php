@@ -189,3 +189,36 @@ function getOwnTiles($player, $board) {
     }
     return $ownTiles;
 }
+
+function mayPass($player, $hand, $board) {
+    if (array_sum($hand) > 0) {
+        return false;
+    }
+    $ownTiles = getOwnTiles($player, $board);
+    // get all empty neighbour positions
+    $validPlacements = getValidPlacements($player, $hand, $board);
+    // for every tile, check if it can be placed at any empty neighbour position
+    foreach ($ownTiles as $pos) {
+        foreach ($validPlacements as $placement) {
+            // check tile type and if it can be placed at the position
+            if (isset($board[$pos]) && ($board[$pos][count($board[$pos]) - 1][1] == "Q" || $board[$pos][count($board[$pos]) - 1][1] == "B")) {
+                if (slide($board, $pos, $placement)) {
+                    return false;
+                }
+            } elseif ($board[$pos][count($board[$pos]) - 1][1] == "G") {
+                if (moveGrasshopper($board, $pos, $placement)) {
+                    return false;
+                }
+            } elseif ($board[$pos][count($board[$pos]) - 1][1] == "A") {
+                if (moveAnt($board, $pos, $placement)) {
+                    return false;
+                }
+            } elseif ($board[$pos][count($board[$pos]) - 1][1] == "S") {
+                if (moveSpider($board, $pos, $placement)) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
