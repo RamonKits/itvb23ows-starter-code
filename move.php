@@ -88,6 +88,21 @@ if (!isset($board[$from])) {
         $_SESSION['last_move'] = $db->insert_id;
     }
     $_SESSION['board'] = $board;
+    // Check if the game is over
+    $endOfGameStatus = endOfGame($board);
+    if ($endOfGameStatus) {
+        switch ($endOfGameStatus) {
+            case 1:
+                $_SESSION['error'] = 'White wins';
+                break;
+            case 2:
+                $_SESSION['error'] = 'Black wins';
+                break;
+            case 3:
+                $_SESSION['error'] = 'Draw';
+                break;
+        }
+    }
 }
 
 header('Location: index.php');

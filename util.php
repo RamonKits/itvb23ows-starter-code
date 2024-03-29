@@ -222,3 +222,36 @@ function mayPass($player, $hand, $board) {
     }
     return true;
 }
+
+/**
+ * @param array $board
+ * @return int 1 if white wins, 2 if black wins, 3 if the game ended in a draw, 0 if the game is not over
+ */
+function endOfGame($board) {
+    // find queens of both players
+    $whiteQueen = null;
+    $blackQueen = null;
+    $winState = 0;
+    foreach ($board as $pos => $tile) {
+        if ($tile && $tile[count($tile) - 1][1] == "Q") {
+            if ($tile[count($tile) - 1][0] == 0) {
+                $whiteQueen = $pos;
+            } else {
+                $blackQueen = $pos;
+            }
+        }
+    }
+    // if one of the queens is surrounded by tiles, the other player wins
+    if ($whiteQueen && !hasNeighBour($whiteQueen, $board)) {
+        $winState = 2;
+    }
+    if ($blackQueen && !hasNeighBour($blackQueen, $board)) {
+        $winState = 1;
+    }
+    // if both queens are surrounded by tiles, the game is a draw
+    if ($whiteQueen && $blackQueen && !hasNeighBour($whiteQueen, $board) && !hasNeighBour($blackQueen, $board)) {
+        $winState = 3;
+    }
+    return $winState;
+}
+    
