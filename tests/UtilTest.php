@@ -175,4 +175,32 @@ class UtilTest extends TestCase
         ];
         $this->assertFalse(moveGrasshopper($board, '0,0', '1,2'));
     }
+
+    public function testMoveAnt()
+    {
+        // moves by shifting an unlimited number of times
+        $board = [
+            '0,0' => [['0', 'A']],
+            '0,1' => [['1', 'Q']],
+        ];
+        $this->assertTrue(moveAnt($board, '0,0', '0,2'));
+        $this->assertFalse(moveAnt($board, '0,0', '0,3'));
+        $this->assertTrue(moveAnt($board, '0,0', '1,1'));
+
+        // may not move to the field where he is already standing
+        $board = [
+            '0,0' => [['0', 'A']],
+            '0,1' => [['1', 'Q']],
+        ];
+        $this->assertFalse(moveAnt($board, '0,0', '0,0'));
+
+        // may only be moved over and into empty fields
+        $board = [
+            '0,0' => [['0', 'A']],
+            '0,1' => [['1', 'Q']],
+            '0,2' => [['0', 'Q']],
+            '1,1' => [['1', 'G']],
+        ];
+        $this->assertFalse(moveAnt($board, '0,0', '0,2'));
+        $this->assertFalse(moveAnt($board, '0,0', '1,1'));
 }
