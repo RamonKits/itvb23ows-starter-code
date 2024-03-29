@@ -114,7 +114,36 @@ function antBfs($board, $from, $to, $visited, $queue) {
 }
 
 function moveSpider($board, $from, $to) {
-    // TODO: implement
+    $from = explode(',', $from);
+    $to = explode(',', $to);
+    // cannot move to an occupied field
+    if (isset($board["$to[0],$to[1]"])) {
+        return false;
+    }
+    $visited = [];
+    $queue = [$from];
+    // use BFS to find a path of max 3 steps
+    return spiderBfs($board, $from, $to, $visited, $queue, 3);
+}
+
+function spiderBfs($board, $from, $to, $visited, $queue, $steps) {
+    if ($steps < 0) {
+        return false;
+    }
+    if ($from[0] == $to[0] && $from[1] == $to[1] && $steps == 0) {
+        return true;
+    }
+    $visited[] = $from;
+    foreach ($GLOBALS['OFFSETS'] as $pq) {
+        $p = $from[0] + $pq[0];
+        $q = $from[1] + $pq[1];
+        if (isset($board["$p,$q"]) && !in_array([$p, $q], $visited)) {
+            $queue[] = [$p, $q];
+        }
+    }
+    if ($queue) {
+        return spiderBfs($board, array_shift($queue), $to, $visited, $queue, $steps - 1);
+    }
 }
 
 function getAvailablePieces($hand) {
