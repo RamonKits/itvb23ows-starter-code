@@ -60,7 +60,25 @@ function slide($board, $from, $to) {
 }
 
 function moveGrasshopper($board, $from, $to) {
-    // TODO: implement
+    $from = explode(',', $from);
+    $to = explode(',', $to);
+    foreach ($GLOBALS['OFFSETS'] as $pq) {
+        // if first tile is empty, return false
+        $p = $from[0] + $pq[0];
+        $q = $from[1] + $pq[1];
+        if (!isset($board["$p,$q"])) {
+            return false;
+        }
+        // return true if first upcoming empty tile is the destination
+        while (isset($board["$p,$q"])) {
+            $p += $pq[0];
+            $q += $pq[1];
+            if ($p == $to[0] && $q == $to[1] && !isset($board["$p,$q"])) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 function moveAnt($board, $from, $to) {
